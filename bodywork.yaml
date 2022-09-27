@@ -15,6 +15,7 @@ stages:
       - protobuf==3.20.1
       - psycopg2-binary==2.8.6
       - sentry-sdk==0.20.3
+      - google-cloud-storage ==2.5.0
     secrets:
       MLFLOW_BACKEND_STORE_URI: mlflow-config
       MLFLOW_DEFAULT_ARTIFACT_ROOT: mlflow-config
