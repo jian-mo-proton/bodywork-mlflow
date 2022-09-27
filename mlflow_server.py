@@ -34,11 +34,8 @@ def start_mlflow_server(backend_store_uri: str, default_artifact_root: str) -> N
     :param backend_store_uri: URI to a database back-end.
     :param default_artifact_root: Location to use for storing artefacts.
     """
-    try:
-        initialize_backend_stores(backend_store_uri, default_artifact_root)
-    except Exception as e:
-        log.error(f"Error initializing backend store - {e}")
-        sys.exit(1)
+    initialize_backend_stores(backend_store_uri, default_artifact_root)
+
 
     try:
         _run_server(
