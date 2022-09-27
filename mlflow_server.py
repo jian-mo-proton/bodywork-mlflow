@@ -65,7 +65,7 @@ if __name__ == "__main__":
 
     try:
         backend_store_uri = os.environ["MLFLOW_BACKEND_STORE_URI"]
-        log.info("environment variable MLFLOW_BACKEND_STORE_URI is"+backend_store_uri)
+        log.info("environment variable MLFLOW_BACKEND_STORE_URI is "+backend_store_uri)
 
     except KeyError:
         log.error("environment variable MLFLOW_BACKEND_STORE_URI cannot be found")
@@ -73,6 +73,8 @@ if __name__ == "__main__":
 
     try:
         default_artifact_root = os.environ["MLFLOW_DEFAULT_ARTIFACT_ROOT"]
+        log.info("environment variable MLFLOW_DEFAULT_ARTIFACT_ROUTE is "+default_artifact_root )
+
     except KeyError:
         log.error("environment variable MLFLOW_DEFAULT_ARTIFACT_ROUTE cannot be found")
         sys.exit(1)
