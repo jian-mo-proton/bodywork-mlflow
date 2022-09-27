@@ -9,10 +9,26 @@ import sys
 from mlflow.server import _run_server
 from mlflow.server.handlers import initialize_backend_stores
 from mlflow.utils.process import ShellCommandException
-
+from google.cloud import storage
+from google.cloud.storage.constants import RPO_DEFAULT
 
 DEFAULT_HOST = "0.0.0.0"
 DEFAULT_PORT = 5000
+
+
+
+def get_rpo(bucket_name):
+    """Gets the RPO of the bucket"""
+    # The ID of your GCS bucket
+    # bucket_name = "my-bucket"
+
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(bucket_name)
+
+    bucket.rpo = RPO_DEFAULT
+    rpo = bucket.rpo
+
+    print(f"RPO for {bucket.name} is {rpo}.")
 
 
 def configure_logger() -> logging.Logger:
@@ -35,6 +51,7 @@ def start_mlflow_server(backend_store_uri: str, default_artifact_root: str) -> N
     :param default_artifact_root: Location to use for storing artefacts.
     """
     print(default_artifact_root)
+    get_rpo(default_artifact_root)
     initialize_backend_stores(backend_store_uri, default_artifact_root)
 
 
