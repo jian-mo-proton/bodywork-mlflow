@@ -8,7 +8,7 @@ stages:
   server:
     executable_module_path: mlflow_server.py
     requirements:
-      - mlflow==1.16.0
+      - mlflow==1.29.0
       - scikit-learn
       - pyarrow
       - boto3
