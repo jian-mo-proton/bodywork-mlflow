@@ -20,6 +20,9 @@ stages:
       MLFLOW_BACKEND_STORE_URI: mlflow-config
       MLFLOW_DEFAULT_ARTIFACT_ROOT: mlflow-config
       SENTRY_DSN: mlflow-config
+      AWS_ACCESS_KEY_ID: minio-credentials   
+      AWS_SECRET_ACCESS_KEY: minio-credentials   
+    
       # export MLFLOW_BACKEND_STORE_URI=postgresql+psycopg2://mladmin:protonflow@localhost:5433/mlflow
       # postgresql+psycopg2://mladmin:protonflow@mlflow-tracking-server-database-postgresql.default.svc.cluster.local:5433/mlflow
       # export MLFLOW_DEFAULT_ARTIFACT_ROOT=gs://proton-mlflow-artifacts
