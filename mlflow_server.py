@@ -13,7 +13,7 @@ from google.cloud import storage
 from google.cloud.storage.constants import RPO_DEFAULT
 
 DEFAULT_HOST = "0.0.0.0"
-DEFAULT_PORT = 5000
+DEFAULT_PORT = 5010
 
 
 
@@ -44,9 +44,8 @@ def configure_logger() -> logging.Logger:
     return log
 
 
-def start_mlflow_server(backend_store_uri: str, default_artifact_root: str,serve_artifact:bool) -> None:
+def start_mlflow_server(backend_store_uri: str, default_artifact_root: str,serve_artifacts:bool) -> None:
     """Start the server.
-
     :param backend_store_uri: URI to a database back-end.
     :param default_artifact_root: Location to use for storing artefacts.
     """
@@ -60,11 +59,11 @@ def start_mlflow_server(backend_store_uri: str, default_artifact_root: str,serve
             backend_store_uri,
             backend_store_uri,
             default_artifact_root,
-            serve_artifact=serve_artifact,
+            serve_artifacts=serve_artifacts,
             artifacts_only=False,
             artifacts_destination=default_artifact_root,
-            DEFAULT_HOST,
-            DEFAULT_PORT,
+            host=DEFAULT_HOST,
+            port=DEFAULT_PORT,
             workers=1,
         )
     except ShellCommandException as e:
@@ -95,21 +94,21 @@ if __name__ == "__main__":
 
     try:
         default_artifact_root = os.environ["MLFLOW_DEFAULT_ARTIFACT_ROOT"]
-        log.info("environment variable MLFLOW_DEFAULT_ARTIFACT_ROUTE is "+default_artifact_root )
+        log.info("environment variable MLFLOW_DEFAULT_ARTIFACT_ROOT is "+default_artifact_root )
 
     except KeyError:
-        log.error("environment variable MLFLOW_DEFAULT_ARTIFACT_ROUTE cannot be found")
+        log.error("environment variable MLFLOW_DEFAULT_ARTIFACT_ROOT cannot be found")
         sys.exit(1)
         
     try:
-        serve_artifact = os.environ["SERVE_ARTIFACT"]
-        log.info("environment variable MLFLOW_DEFAULT_ARTIFACT_ROUTE is "+default_artifact_root )
+        serve_artifacts = os.environ["SERVE_ARTIFACTS"]
+        log.info("environment variable SERVE_ARTIFACTS is "+serve_artifacts )
 
     except KeyError:
-        log.error("environment variable MLFLOW_DEFAULT_ARTIFACT_ROUTE cannot be found")
+        log.error("environment variable SERVE_ARTIFACTS cannot be found")
         sys.exit(1)
 
     log.info("starting MLflow server")
     start_mlflow_server(
-        backend_store_uri=backend_store_uri, default_artifact_root=default_artifact_root,serve_artifact=serve_artifact
+        backend_store_uri=backend_store_uri, default_artifact_root=default_artifact_root,serve_artifacts=serve_artifacts
     )
