@@ -13,7 +13,7 @@ from google.cloud import storage
 from google.cloud.storage.constants import RPO_DEFAULT
 
 DEFAULT_HOST = "0.0.0.0"
-DEFAULT_PORT = 5010
+DEFAULT_PORT = 5000
 
 
 
