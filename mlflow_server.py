@@ -44,7 +44,7 @@ def configure_logger() -> logging.Logger:
     return log
 
 
-def start_mlflow_server(backend_store_uri: str, default_artifact_root: str) -> None:
+def start_mlflow_server(backend_store_uri: str, default_artifact_root: str,serve_artifact:bool) -> None:
     """Start the server.
 
     :param backend_store_uri: URI to a database back-end.
@@ -58,7 +58,11 @@ def start_mlflow_server(backend_store_uri: str, default_artifact_root: str) -> N
     try:
         _run_server(
             backend_store_uri,
+            backend_store_uri,
             default_artifact_root,
+            serve_artifact=serve_artifact,
+            artifacts_only=False,
+            artifacts_destination=default_artifact_root,
             DEFAULT_HOST,
             DEFAULT_PORT,
             workers=1,
@@ -96,8 +100,16 @@ if __name__ == "__main__":
     except KeyError:
         log.error("environment variable MLFLOW_DEFAULT_ARTIFACT_ROUTE cannot be found")
         sys.exit(1)
+        
+    try:
+        serve_artifact = os.environ["SERVE_ARTIFACT"]
+        log.info("environment variable MLFLOW_DEFAULT_ARTIFACT_ROUTE is "+default_artifact_root )
+
+    except KeyError:
+        log.error("environment variable MLFLOW_DEFAULT_ARTIFACT_ROUTE cannot be found")
+        sys.exit(1)
 
     log.info("starting MLflow server")
     start_mlflow_server(
-        backend_store_uri=backend_store_uri, default_artifact_root=default_artifact_root
+        backend_store_uri=backend_store_uri, default_artifact_root=default_artifact_root,serve_artifact=serve_artifact
     )
