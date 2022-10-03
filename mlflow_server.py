@@ -55,7 +55,7 @@ def start_mlflow_server(backend_store_uri: str, default_artifact_root: str,serve
     if serve_artifacts:
         artifacts_destination=default_artifact_root
         #mute default artifact path to allow proxy artifact server 
-        default_artifact_root=None
+        default_artifact_root=False
         
     
     initialize_backend_stores(backend_store_uri, default_artifact_root)
