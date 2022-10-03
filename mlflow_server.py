@@ -52,9 +52,10 @@ def start_mlflow_server(backend_store_uri: str, default_artifact_root: str,serve
     print(default_artifact_root)
     #     get_rpo(default_artifact_root)
     
+    artifacts_destination=default_artifact_root
     if serve_artifacts:  #mute default artifact path to allow proxy artifact server 
         default_artifact_root=None
-    
+        
     
     initialize_backend_stores(backend_store_uri, default_artifact_root)
 
@@ -69,7 +70,7 @@ def start_mlflow_server(backend_store_uri: str, default_artifact_root: str,serve
             default_artifact_root,
             serve_artifacts=serve_artifacts,
             artifacts_only=False,
-            artifacts_destination=default_artifact_root,
+            artifacts_destination=artifacts_destination,
             host=DEFAULT_HOST,
             port=DEFAULT_PORT,
             workers=1,
