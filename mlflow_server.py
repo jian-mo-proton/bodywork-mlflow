@@ -51,10 +51,18 @@ def start_mlflow_server(backend_store_uri: str, default_artifact_root: str,serve
     """
     print(default_artifact_root)
     get_rpo(default_artifact_root)
+    
+    if serve_artifacts:  #mute default artifact path to allow proxy artifact server 
+        default_artifact_root=None
+    
+    
     initialize_backend_stores(backend_store_uri, default_artifact_root)
 
 
     try:
+        
+            
+            
         _run_server(
             backend_store_uri,
             backend_store_uri,
@@ -66,6 +74,7 @@ def start_mlflow_server(backend_store_uri: str, default_artifact_root: str,serve
             port=DEFAULT_PORT,
             workers=1,
         )
+
     except ShellCommandException as e:
         log.error(f"Running the mlflow server failed - {e}")
         sys.exit(1)
